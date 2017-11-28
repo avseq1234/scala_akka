@@ -82,20 +82,19 @@ object OneForOneStragegyDemo {
 
     val supervisor = system.actorOf(Props[SupervisorActor],name="SupervisorActor")
 
-    supervisor!5
-
+    supervisor! -5
     implicit val timeout = Timeout(10 seconds)
     var future = (supervisor ? new NormalMessage).mapTo[Int]
     var resultMsg = Await.result(future,timeout.duration)
     log.info("Result:" + resultMsg)
-    /*
+
     supervisor! new NullPointerException
     future = (supervisor ? new NormalMessage).mapTo[Int]
     resultMsg = Await.result(future,timeout.duration)
     log.info("Result:" + resultMsg)
 
-    supervisor ? "String"*/
-    Thread.sleep(10000)
+    supervisor ? "String"
+
     system.terminate()
 
   }
